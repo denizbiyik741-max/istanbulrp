@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İstanbul RP | Sunucu Durumu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Varsayılan Renkler (Gün Batımı) */
+            --status-color: #ff9966;
+            --status-shadow: rgba(255, 153, 102, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), var(--status-shadow)), 
+                        url('https://cdn.discordapp.com/attachments/1470819636546371616/1470904090530808021/awdawdwadwadwa.jpg?ex=698cfdaf&is=698bac2f&hm=724634d034b71f2bcbdab7cba77a8c2a1fbc70e0ec3bb6e10afb6260e9835d47');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background 0.8s ease; /* Renk geçişi yumuşak olsun */
+        }
+
+        /* --- DURUM KUTUSU --- */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--status-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px var(--status-shadow);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--status-color);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--status-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 20px var(--status-color); }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        /* --- ANA KONTEYNER --- */
+        .container {
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 0.5rem; color: #fff; text-shadow: 0 0 20px var(--status-shadow); }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .f-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn-discord {
+            display: inline-block;
+            background: #7289da;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-discord:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+    </style>
+</head>
+<body>
+
+    <div class="status-badge" id="statusBox">
+        <span class="dot"></span>
+        <span id="statusText">YÜKLENİYOR...</span>
+    </div>
+
+    <div class="container">
+        <h1>İstanbul RP</h1>
+        <p>Sınırsız İş, Kaliteli Rol, Gerçekçi İstanbul!</p>
+        
+        <div class="features-grid">
+            <div class="f-item">🏠 Ev Al/Sat</div>
+            <div class="f-item">🛒 Dükkan İşlet</div>
+            <div class="f-item">⚖️ Hapishane Sistemi</div>
+            <div class="f-item">🗺️ Dev Harita</div>
+        </div>
+
+        <a href="https://discord.gg/xArTMjhtFb" class="btn-discord">
+            <i class="fab fa-discord"></i> DISCORD'A KATIL
+        </a>
+    </div>
+
+    <script>
+        // --- AYARLAR BURADAN YAPILIR ---
+        // Durumlar: 'WORKING', 'UPDATING', 'DOWN', 'BETA'
+        const serverStatus = 'BETA'; 
+
+        const statusSettings = {
+            'WORKING': { text: 'AKTİF', color: '#2ecc71', shadow: 'rgba(46, 204, 113, 0.3)' },
+            'UPDATING': { text: 'GÜNCELLENİYOR', color: '#3498db', shadow: 'rgba(52, 152, 219, 0.3)' },
+            'DOWN': { text: 'KAPALI', color: '#e74c3c', shadow: 'rgba(231, 76, 60, 0.3)' },
+            'BETA': { text: 'BETA AŞAMASI', color: '#f1c40f', shadow: 'rgba(241, 196, 15, 0.3)' }
+        };
+
+        function setStatus(status) {
+            const config = statusSettings[status];
+            document.documentElement.style.setProperty('--status-color', config.color);
+            document.documentElement.style.setProperty('--status-shadow', config.shadow);
+            document.getElementById('statusText').innerText = config.text;
+        }
+
+        // Durumu uygula
+        setStatus(serverStatus);
+    </script>
+</body>
+</html>
